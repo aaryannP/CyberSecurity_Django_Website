@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+</head>
+<body>
+    <div class="site-header">
+        <h1 class="site-name">ThreatHuntersCell</h1>
+    </div>
+    <div class="glass-card">
+        <h2>Login</h2>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="email" name="email" id="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+        <div class="links">
+            <a href="{% url 'forgot_password' %}" id="forgot_pwd_link">Forgot Password?</a><br><br>
+            <a href="{% url 'register' %}">Don't have an account? Register here.</a>
+        </div>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const forgotLink = document.getElementById('forgot_pwd_link');
+        const baseUrl = "{% url 'forgot_password' %}";
+
+        emailInput.addEventListener('input', function() {
+            if (emailInput.value) {
+                forgotLink.href = baseUrl + "?email=" + encodeURIComponent(emailInput.value);
+            } else {
+                forgotLink.href = baseUrl;
+            }
+        });
+    </script>
+</body>
+</html>

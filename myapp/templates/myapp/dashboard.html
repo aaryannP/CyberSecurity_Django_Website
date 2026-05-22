@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="header-left">
+                <h1 class="site-name">ThreatHuntersCell</h1>
+                <h2>Security Monitoring Dashboard</h2>
+            </div>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout ({{ user_full_name }})</button>
+            </form>
+        </div>
+
+        <!-- Alert System -->
+        {% if alerts %}
+            <div class="alerts-container">
+                {% for alert in alerts %}
+                    <div class="alert">
+                        <strong>⚠️ ALERT:</strong> &nbsp; {{ alert }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>{{ total_users }}</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="gradient-orange">{{ total_login_attempts }}</h3>
+                <p>Login Attempts</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="gradient-red">{{ total_suspicious_logins }}</h3>
+                <p>Suspicious Logins</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="gradient-teal">{{ total_activities }}</h3>
+                <p>Total Activities</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="gradient-red">{{ total_suspicious_activities }}</h3>
+                <p>Suspicious Activities</p>
+            </div>
+        </div>
+
+        <!-- User List -->
+        <h3 class="section-title">Users Overview</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Verified</th>
+                        <th>Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in all_users %}
+                        <tr class="{% if u.risk_level == 'High Risk' %}suspicious-row{% endif %}">
+                            <td>{{ u.first_name }} {{ u.last_name }}</td>
+                            <td>
+                                {% if u.is_verified %}
+                                    <span class="badge badge-success">Yes</span>
+                                {% else %}
+                                    <span class="badge badge-danger">No</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if u.risk_level == 'High Risk' %}
+                                    <span class="badge badge-danger">{{ u.risk_level }}</span>
+                                {% elif u.risk_level == 'Medium Risk' %}
+                                    <span class="badge badge-warning">{{ u.risk_level }}</span>
+                                {% else %}
+                                    <span class="badge badge-info">{{ u.risk_level }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Login Logs -->
+        <h3 class="section-title">Recent Login Attempts</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>IP Address</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Suspicious</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in login_logs %}
+                        <tr class="{% if log.is_suspicious %}suspicious-row{% endif %}">
+                            <td>{{ log.user_name }}</td>
+                            <td>{{ log.ip_address }}</td>
+                            <td>{{ log.login_time|date:"M d, Y H:i:s" }}</td>
+                            <td>
+                                {% if log.success %}
+                                    <span class="badge badge-success">Success</span>
+                                {% else %}
+                                    <span class="badge badge-danger">Failed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if log.is_suspicious %}
+                                    <span class="badge badge-danger">Yes</span>
+                                {% else %}
+                                    <span class="badge badge-info">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Activity Logs -->
+        <h3 class="section-title">Recent Activities</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Action</th>
+                        <th>Time</th>
+                        <th>Suspicious</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in activity_logs %}
+                        <tr class="{% if log.is_suspicious %}suspicious-row{% endif %}">
+                            <td>{{ log.user_name }}</td>
+                            <td>{{ log.action }}</td>
+                            <td>{{ log.timestamp|date:"M d, Y H:i:s" }}</td>
+                            <td>
+                                {% if log.is_suspicious %}
+                                    <span class="badge badge-danger">Yes</span>
+                                {% else %}
+                                    <span class="badge badge-info">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

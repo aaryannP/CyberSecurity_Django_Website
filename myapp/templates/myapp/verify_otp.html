@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+</head>
+<body>
+    <div class="site-header">
+        <h1 class="site-name">ThreatHuntersCell</h1>
+    </div>
+    <div class="glass-card">
+        <h2>Verify Email</h2>
+        <p>Enter the 6-digit OTP sent to your email{% if email %}<br><b>{{ email }}</b>{% endif %}</p>
+        
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success">{{ success }}</div>
+        {% endif %}
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" name="otp" placeholder="••••••" pattern="\d{6}" title="6-digit OTP" required maxlength="6">
+            <button type="submit">Verify & Continue</button>
+        </form>
+
+        <div class="timer" id="timerDisplay">Resend OTP in 60s</div>
+        
+        <form method="POST" action="{% url 'resend_otp' %}" id="resendForm">
+            {% csrf_token %}
+            <button type="submit" id="resendBtn" class="resend-btn" disabled>Resend OTP</button>
+        </form>
+    </div>
+
+    <script>
+        let timeLeft = 60;
+        const timerDisplay = document.getElementById('timerDisplay');
+        const resendBtn = document.getElementById('resendBtn');
+
+        const countdown = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerDisplay.innerHTML = "You can now resend OTP";
+                resendBtn.disabled = false;
+                resendBtn.style.background = "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)";
+                resendBtn.style.color = "white";
+                resendBtn.style.border = "none";
+                resendBtn.style.boxShadow = "0 4px 15px rgba(0, 114, 255, 0.4)";
+            } else {
+                timerDisplay.innerHTML = "Resend OTP in " + timeLeft + "s";
+            }
+            timeLeft -= 1;
+        }, 1000);
+    </script>
+</body>
+</html>
