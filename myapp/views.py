@@ -85,7 +85,7 @@ def register_view(request):
     except Exception as e:
         print("EMAIL ERROR:", e)
     
-        return redirect('verify_otp')
+        # return redirect('verify_otp')
 
     return render(request, 'myapp/register.html')
 
