@@ -73,19 +73,19 @@ def register_view(request):
         request.session['verify_otp_attempts'] = 0
 
     try:
-    send_mail(
-        subject="OTP Verification",
-        message=f"Your OTP is {otp_code}",
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[email],
-        fail_silently=True,
-    )
-    print("EMAIL SENT SUCCESS")
+        send_mail(
+            subject="OTP Verification",
+            message=f"Your OTP is {otp_code}",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[email],
+            fail_silently=True,
+        )
+        print("EMAIL SENT SUCCESS")
     
     except Exception as e:
         print("EMAIL ERROR:", e)
     
-    return redirect('verify')
+        return redirect('verify_otp')
 
     return render(request, 'myapp/register.html')
 
