@@ -122,7 +122,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'daymabirdichand483@gmail.com'
-EMAIL_HOST_PASSWORD = 'upgpwoefvutubwzc'
+EMAIL_HOST_PASSWORD = 'upgp woef vutu bwzc'
 
 
 # Login Redirects
