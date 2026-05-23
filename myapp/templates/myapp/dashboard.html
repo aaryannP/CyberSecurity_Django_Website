@@ -99,7 +99,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>IP Address</th>
+                        <!-- <th>IP Address</th> -->
                         <th>Time</th>
                         <th>Status</th>
                         <th>Suspicious</th>
@@ -109,7 +109,7 @@
                     {% for log in login_logs %}
                         <tr class="{% if log.is_suspicious %}suspicious-row{% endif %}">
                             <td>{{ log.user_name }}</td>
-                            <td>{{ log.ip_address }}</td>
+                            <!-- <td>{{ log.ip_address }}</td> -->
                             <td>{{ log.login_time|date:"M d, Y H:i:s" }}</td>
                             <td>
                                 {% if log.success %}
