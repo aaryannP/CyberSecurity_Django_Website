@@ -121,8 +121,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'daymabirdichand483@gmail.com'
-EMAIL_HOST_PASSWORD = 'upgp woef vutu bwzc'
+EMAIL_HOST_USER = 'aryanparmar5116@gmail.com'
+EMAIL_HOST_PASSWORD = 'wacm evdg qjea xvix'
 
 
 # Login Redirects
