@@ -114,16 +114,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Email Configuration
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Replace with your Gmail
 EMAIL_HOST_USER = 'daymabirdichand483@gmail.com'
-
-# Replace with Gmail App Password
-EMAIL_HOST_PASSWORD = 'upgpvwefvutubwzc'
+EMAIL_HOST_PASSWORD = 'upgpwoefvutubwzc'
 
 
 # Login Redirects
