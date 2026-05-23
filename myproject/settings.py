@@ -123,7 +123,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'daymabirdichand483@gmail.com'
 
 # Replace with Gmail App Password
-EMAIL_HOST_PASSWORD = 'upgp vwef vutu bwzc'
+EMAIL_HOST_PASSWORD = 'upgpvwefvutubwzc'
 
 
 # Login Redirects
